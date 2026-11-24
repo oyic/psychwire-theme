@@ -3,3 +3,4 @@ test-guide/
 docs/
 .claude/
 .superpowers/
+.playwright-mcp/
