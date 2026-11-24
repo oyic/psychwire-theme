@@ -18,7 +18,7 @@ It installs this theme from this repo into a throwaway WordPress and opens the p
 | Plugins | None. Nothing is added to the admin screens |
 | JavaScript | None. The only `<script>` on the page is the JSON-LD data block |
 | Content | Verbatim from the brief, held in one PHP file (`inc/data.php`) |
-| Quality gates | Lighthouse 99 / 100 / 100 / 100 on the live HTTPS site, PHPCS (WordPress standards) clean, GitHub Actions CI |
+| Quality gates | Lighthouse 100 / 100 / 100 / 100 on the live HTTPS site, PHPCS (WordPress standards) clean, GitHub Actions CI |
 
 ---
 
@@ -67,7 +67,9 @@ These are the extras I added on top of what the brief asked for.
 - Windows high-contrast (`forced-colors`) support, `scroll-margin` on anchored sections, and smooth scrolling only when the visitor has not asked for reduced motion.
 
 **Performance**
-- Responsive hero image: a `<picture>` with WebP and JPEG at 400w and 800w, explicit `width`/`height`, and `fetchpriority="high"`. This took Largest Contentful Paint from 1.5 s to 1.1 s.
+- **Hero image:** a `<picture>` with WebP and JPEG at 400w, 600w and 800w, explicit dimensions, `fetchpriority="high"`, a preload with the same `srcset`, and a smaller display size on phones. A reserved 4:5 box carries a 96-byte blurred placeholder, so the photo area looks right from the first paint (this is what Speed Index measures).
+- **No render-blocking CSS:** the small theme stylesheet is inlined (`inc/performance.php`), removing a request from the critical path.
+- **Lighter HTML:** the header nav is a plain `<nav>` and list. The core Navigation block added about 21 KB of inline CSS even with its overlay menu off. HTML went from 60 KB to 39 KB (12 KB to 8 KB gzipped).
 
 **Maintainability**
 - **Single source of truth.** Profile and courses live in `inc/data.php`. The Courses section, the header, the footer and the JSON-LD all read from it, so the page and its structured data cannot disagree.
@@ -85,8 +87,9 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 
 | Check | Result | How |
 |---|---|---|
-| Lighthouse, live HTTPS site | Performance 99, Accessibility 100, Best practices 100, SEO 100 | Lighthouse, mobile |
-| Largest Contentful Paint / CLS / blocking time | 1.6 s / 0 / 0 ms on the live server (1.1 s locally) | Lighthouse |
+| Lighthouse, live HTTPS site | Performance 100, Accessibility 100, Best practices 100, SEO 100 | Lighthouse, mobile (median of 3 runs) |
+| First paint / Largest Contentful Paint / Speed Index | 0.83 s / 1.19 s / 2.06 s (was 0.99 s / 1.44 s / 2.50 s before the performance pass) | Lighthouse, mobile, median of 3 runs on the live site |
+| Layout shift / blocking time | 0 / about 40 ms | Lighthouse |
 | Width 375px | No horizontal scroll | Browser measurement: page width equals viewport, no element wider than it |
 | Heading order | H1, H2, H2, H3 x3, H2 | Parsed from the rendered HTML |
 | Keyboard order | skip link, brand, About, Courses, Contact, email | Focusable elements in DOM order |
@@ -106,7 +109,7 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 - **Styles were not loading.** Block themes do not load `style.css` on the front end by themselves. The theme now enqueues it, and the editor gets it too.
 - **Two skip links.** WordPress already adds one, so mine was removed to avoid a duplicate tab stop.
 - **Patterns did not appear** right after being created, because WordPress caches the list of pattern files. Clearing transients fixes it during development.
-- **The independent review** found and I fixed: blank search and 404 pages; the course `provider` pointing at a Person instead of an Organization; courses locked inside one Custom HTML block; a nav made of loose paragraphs; a wrong minimum WordPress version for `theme.json` v3; missing editor styles; and hero image markup that would fail block validation.
+- **The independent review** found and I fixed: blank search and 404 pages; the course `provider` pointing at a Person instead of an Organization; courses locked inside one Custom HTML block; a nav made of loose paragraphs (now a plain nav and list, see Performance); a wrong minimum WordPress version for `theme.json` v3; missing editor styles; and hero image markup that would fail block validation.
 - **Meta description** was 164 characters at first. It is now 143.
 - **Editor error on every course card.** The card groups had an invalid layout type (`flow`), which the front end ignored but the block editor could not handle ("This block has encountered an error and cannot be previewed"). Removed; the Site Editor now loads the front page with no console errors and no error blocks.
 - **`mailto:` link** is plain HTML, not obfuscated, so crawlers can read it.
@@ -120,12 +123,13 @@ theme.json         palette, type, spacing, layout widths
 functions.php      theme supports, stylesheet, loads inc/*
 inc/data.php       profile + courses (single source of truth)
 inc/seo.php        title, meta description, canonical, social tags, favicon, JSON-LD
-inc/a11y.php       labels each <section> with its heading
+inc/a11y.php       labels each <section> with its heading, and the header <nav> as "Primary"
 inc/cleanup.php    removes core emoji + speculation-rules scripts (zero JS)
+inc/performance.php inlines style.css, preloads the hero image
 templates/         front-page (the one page), index, singular, 404
 parts/             header, footer (each just loads a pattern)
 patterns/          header, hero, about, courses, contact, footer
-assets/images/     hero (webp + jpg, 400w/800w), social image, favicon
+assets/images/     hero (webp + jpg, 400w/600w/800w), social image, favicon
 blueprint.json     WordPress Playground demo
 phpcs.xml.dist     coding standards, composer.json  dev tooling
 .github/workflows  CI
