@@ -17,10 +17,18 @@ $nav = array(
 <header class="wp-block-group" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--50)">
 	<!-- wp:site-title {"level":0,"style":{"typography":{"fontWeight":"700"}}} /-->
 
-	<!-- wp:navigation {"overlayMenu":"never","ariaLabel":"<?php echo esc_attr__( 'Primary', 'psychwire' ); ?>","layout":{"type":"flex","flexWrap":"wrap"}} -->
+	<!-- wp:group {"tagName":"nav","className":"site-nav"} -->
+	<nav class="wp-block-group site-nav">
+		<!-- wp:list {"className":"site-nav__list"} -->
+		<ul class="wp-block-list site-nav__list">
 <?php foreach ( $nav as $slug => $label ) : ?>
-		<!-- wp:navigation-link {"label":"<?php echo esc_attr( $label ); ?>","type":"","url":"/#<?php echo esc_attr( $slug ); ?>","kind":"custom"} /-->
+			<!-- wp:list-item -->
+			<li><a href="/#<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $label ); ?></a></li>
+			<!-- /wp:list-item -->
 <?php endforeach; ?>
-	<!-- /wp:navigation -->
+		</ul>
+		<!-- /wp:list -->
+	</nav>
+	<!-- /wp:group -->
 </header>
 <!-- /wp:group -->

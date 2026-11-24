@@ -36,15 +36,34 @@ Text Domain: psychwire
 	font-weight: 600;
 }
 
-/* Hero photo (responsive <picture>) */
+/* Hero photo: reserved 4:5 box with a tiny blurred placeholder, so the area looks right from the first paint */
 .hero-photo {
-	margin: 0;
+	margin: 0 auto;
+	max-width: 20rem;
+	aspect-ratio: 4 / 5;
+	overflow: hidden;
+	border-radius: 0.5rem;
+	background: #77705f url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoKAAwABABoJQBOgBufZyYN12IAAP7CEgSdBmYPnxV7oTP/wOM0i4QN2F9p/n3VGaLCoUG3C6oF7tWfCal6OLm1wKoL0l4A) center / cover no-repeat;
 }
 .hero-photo img {
 	display: block;
 	width: 100%;
 	height: auto;
-	border-radius: 0.5rem;
+}
+@media (min-width: 48rem) {
+	.hero-photo {
+		max-width: none;
+	}
+}
+
+/* Primary navigation: a plain list (the core Navigation block would add about 21 KB of inline CSS) */
+.site-nav ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 1.25rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 /* Anchored sections keep a little air when jumped to */
