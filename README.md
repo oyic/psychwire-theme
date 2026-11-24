@@ -108,6 +108,7 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 - **Patterns did not appear** right after being created, because WordPress caches the list of pattern files. Clearing transients fixes it during development.
 - **The independent review** found and I fixed: blank search and 404 pages; the course `provider` pointing at a Person instead of an Organization; courses locked inside one Custom HTML block; a nav made of loose paragraphs; a wrong minimum WordPress version for `theme.json` v3; missing editor styles; and hero image markup that would fail block validation.
 - **Meta description** was 164 characters at first. It is now 143.
+- **Editor error on every course card.** The card groups had an invalid layout type (`flow`), which the front end ignored but the block editor could not handle ("This block has encountered an error and cannot be previewed"). Removed; the Site Editor now loads the front page with no console errors and no error blocks.
 - **`mailto:` link** is plain HTML, not obfuscated, so crawlers can read it.
 - **Pretty URLs on the live host.** WP-CLI could not write `.htaccess` on IONOS, so unknown URLs, `robots.txt` and the sitemap returned the server's own 404. The deploy now writes the standard WordPress rewrite rules.
 
