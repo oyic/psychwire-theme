@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    name: Lint and coding standards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: PHP syntax
+        run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
+
+      - name: theme.json is valid JSON
+        run: python3 -c "import json; json.load(open('theme.json'))"
+
+      - name: Install dev tools
+        run: composer install --no-interaction --prefer-dist
+
+      - name: WordPress coding standards (PHPCS)
+        run: vendor/bin/phpcs

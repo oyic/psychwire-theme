@@ -37,3 +37,4 @@ add_action( 'wp_enqueue_scripts', 'psychwire_enqueue_styles' );
 require_once get_theme_file_path( 'inc/data.php' );
 require_once get_theme_file_path( 'inc/seo.php' );
 require_once get_theme_file_path( 'inc/cleanup.php' );
+require_once get_theme_file_path( 'inc/a11y.php' );

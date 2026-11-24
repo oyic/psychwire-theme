@@ -35,3 +35,26 @@ Text Domain: psychwire
 	margin-bottom: 0;
 	font-weight: 600;
 }
+
+/* Hero photo (responsive <picture>) */
+.hero-photo {
+	margin: 0;
+}
+.hero-photo img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+}
+
+/* Anchored sections keep a little air when jumped to */
+section[id] {
+	scroll-margin-top: 1rem;
+}
+
+/* Windows high-contrast mode: keep card edges visible */
+@media (forced-colors: active) {
+	.course-card {
+		border-color: CanvasText;
+	}
+}

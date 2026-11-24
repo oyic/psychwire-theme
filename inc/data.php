@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Practitioner profile.
  *
- * @return array{name:string,title:string,bio:string,email:string,photo:string,photo_alt:string,locality:string}
+ * @return array{name:string,title:string,bio:string,email:string,photo:string,social:string,photo_alt:string,locality:string}
  */
 function psychwire_profile(): array {
 	return array(
@@ -23,7 +23,8 @@ function psychwire_profile(): array {
 		'bio'       => 'Dr Alex Rivera is a clinical psychologist based in Sydney, Australia. For the past 12 years she has trained psychologists, counsellors and social workers in Acceptance and Commitment Therapy, a practical approach that helps people handle difficult thoughts and feelings and act on what matters to them.',
 		'email'     => 'hello@example.com',
 		'photo_alt' => 'Dr Alex Rivera smiling, wearing a white shirt',
-		'photo'     => get_theme_file_uri( 'assets/images/dr-rivera.jpg' ),
+		'photo'     => get_theme_file_uri( 'assets/images/dr-rivera-800.jpg' ),
+		'social'    => get_theme_file_uri( 'assets/images/social.jpg' ),
 		'locality'  => 'Sydney',
 	);
 }
