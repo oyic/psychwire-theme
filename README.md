@@ -100,9 +100,13 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 | CI | Passing | GitHub Actions |
 | Live smoke checks | 8 of 8 pass: title, one JSON-LD block, one script, canonical, `en-AU`, 3 course cards, hero image, 404 | Run against the live URL |
 | `robots.txt` and sitemap | Both served by WordPress | `curl` of the live site |
+| Google Rich Results Test | 3 valid Course items, crawled successfully | Run on the live URL |
+| Schema.org validator | 0 errors, 0 warnings | Run on the live URL |
 | Demo link | Installs and activates from GitHub | Opened in a real browser |
 
-**Not done:** I have not pasted the JSON-LD into validator.schema.org or Google's Rich Results Test. Its structure is checked above, but the external validators are worth one manual run: one-click links are in [Structured data (JSON-LD)](#structured-data-json-ld-test-it-yourself) below. The axe command-line tool would not run on my machine (a Chrome and ChromeDriver version mismatch), so accessibility is covered by Lighthouse, which uses the same axe-core rules, plus the manual keyboard and heading checks.
+**External validators (run on 2026-11-25 against the live URL):** Google's Rich Results Test crawled the page successfully and reported "3 valid items detected" (Course list items), and the Schema.org validator reported 0 errors and 0 warnings for the three Course entities and everything linked to them (Person, Organization, WebSite, WebPage, ImageObject, PostalAddress, CourseInstance, Schedule). You can repeat both in one click, see [Structured data (JSON-LD)](#structured-data-json-ld-test-it-yourself) below.
+
+**Not done:** The axe command-line tool would not run on my machine (a Chrome and ChromeDriver version mismatch), so accessibility is covered by Lighthouse, which uses the same axe-core rules, plus the manual keyboard and heading checks.
 
 ### Problems found and fixed along the way
 
@@ -118,6 +122,8 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 ## Structured data (JSON-LD): test it yourself
 
 The page prints one JSON-LD block in `<head>`, built in `inc/seo.php` from the same data as the visible page (`inc/data.php`). It is a connected `@graph`: a `Person` (Dr Rivera), an `Organization` (the course provider), a `WebSite`, a `WebPage` and three `Course` entries, each with an online `CourseInstance`, an ISO 8601 `courseWorkload` and an `instructor`. The monthly supervision course also has a `courseSchedule`.
+
+**Last results (2026-11-25, live URL):** Google Rich Results Test: 3 valid Course items, crawled successfully. Schema.org validator: 0 errors, 0 warnings.
 
 **Test it with a validator (one click, runs against the live site):**
 - [Schema.org validator](https://validator.schema.org/#url=https%3A%2F%2Fpsychwire.chrisalberto.me%2F)
