@@ -18,7 +18,7 @@ $courses = psychwire_courses();
 	<!-- wp:group {"layout":{"type":"grid","minimumColumnWidth":"16rem"}} -->
 	<div class="wp-block-group">
 <?php foreach ( $courses as $course ) : ?>
-		<!-- wp:group {"tagName":"article","anchor":"course-<?php echo esc_attr( $course['slug'] ); ?>","className":"course-card","layout":{"type":"flow"}} -->
+		<!-- wp:group {"tagName":"article","anchor":"course-<?php echo esc_attr( $course['slug'] ); ?>","className":"course-card"} -->
 		<article id="course-<?php echo esc_attr( $course['slug'] ); ?>" class="wp-block-group course-card">
 			<!-- wp:heading {"level":3} -->
 			<h3 class="wp-block-heading"><?php echo esc_html( $course['name'] ); ?></h3>

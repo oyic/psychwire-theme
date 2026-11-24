@@ -142,4 +142,4 @@ During development WordPress caches the list of pattern files. If you add a patt
 
 ## Credits and licence
 
-Photo: portrait by Joecalih on [Unsplash](https://unsplash.com/photos/a-young-professional-woman-smiling-against-a-white-background-1l6UeCc9P9o), used under the Unsplash License. Cropped and resized. Theme code: GPL-2.0-or-later.
+Photo: portrait by Danny Postma on [Unsplash](https://unsplash.com/photos/a-man-in-a-blue-shirt-smiling-at-the-camera-zNxOw2JFNKs), used under the Unsplash License. Cropped and resized. Theme code: GPL-2.0-or-later.
