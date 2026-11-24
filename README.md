@@ -4,7 +4,9 @@
 
 A custom WordPress **block theme** for a one-page site for Dr Alex Rivera, a fictional clinical psychologist and trainer in Sydney. It is my submission for the Psychwire Lead Web Developer technical assessment.
 
-**Try it in your browser (no install):**
+**Live site:** https://psychwire.chrisalberto.me
+
+**Or try it in your browser (no install):**
 [Open the live demo in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/oyic/psychwire-theme/main/blueprint.json)
 It installs this theme from this repo into a throwaway WordPress and opens the page.
 
@@ -16,7 +18,7 @@ It installs this theme from this repo into a throwaway WordPress and opens the p
 | Plugins | None. Nothing is added to the admin screens |
 | JavaScript | None. The only `<script>` on the page is the JSON-LD data block |
 | Content | Verbatim from the brief, held in one PHP file (`inc/data.php`) |
-| Quality gates | Lighthouse 100 / 100 / 100, PHPCS (WordPress standards) clean, GitHub Actions CI |
+| Quality gates | Lighthouse 99 / 100 / 100 / 100 on the live HTTPS site, PHPCS (WordPress standards) clean, GitHub Actions CI |
 
 ---
 
@@ -79,15 +81,12 @@ These are the extras I added on top of what the brief asked for.
 
 ## What I checked
 
-All of these were run against the theme on a local WordPress site, apart from the CI run, which ran on GitHub.
+The Lighthouse row below was run on the live site (https://psychwire.chrisalberto.me). The width, keyboard, heading and script checks were run on a local WordPress site, the smoke checks on the live site, and CI on GitHub.
 
 | Check | Result | How |
 |---|---|---|
-| Performance | 100 | Lighthouse, mobile |
-| Accessibility | 100 | Lighthouse (it runs the axe-core rules) |
-| SEO | 100 | Lighthouse |
-| Best practices | 78 | Loses points only for `http://` on the local domain. It does not apply on an HTTPS host |
-| Largest Contentful Paint / CLS / blocking time | 1.1 s / 0 / 0 ms | Lighthouse |
+| Lighthouse, live HTTPS site | Performance 99, Accessibility 100, Best practices 100, SEO 100 | Lighthouse, mobile |
+| Largest Contentful Paint / CLS / blocking time | 1.6 s / 0 / 0 ms on the live server (1.1 s locally) | Lighthouse |
 | Width 375px | No horizontal scroll | Browser measurement: page width equals viewport, no element wider than it |
 | Heading order | H1, H2, H2, H3 x3, H2 | Parsed from the rendered HTML |
 | Keyboard order | skip link, brand, About, Courses, Contact, email | Focusable elements in DOM order |
@@ -96,6 +95,8 @@ All of these were run against the theme on a local WordPress site, apart from th
 | Meta description | 143 characters | Inside the 70 to 160 target |
 | Coding standards | PHPCS clean | `composer lint` locally and in CI |
 | CI | Passing | GitHub Actions |
+| Live smoke checks | 8 of 8 pass: title, one JSON-LD block, one script, canonical, `en-AU`, 3 course cards, hero image, 404 | Run against the live URL |
+| `robots.txt` and sitemap | Both served by WordPress | `curl` of the live site |
 | Demo link | Installs and activates from GitHub | Opened in a real browser |
 
 **Not done:** I have not pasted the JSON-LD into validator.schema.org or Google's Rich Results Test. Its structure is checked above, but the external validators are worth one manual run. The axe command-line tool would not run on my machine (a Chrome and ChromeDriver version mismatch), so accessibility is covered by Lighthouse, which uses the same axe-core rules, plus the manual keyboard and heading checks.
@@ -108,6 +109,7 @@ All of these were run against the theme on a local WordPress site, apart from th
 - **The independent review** found and I fixed: blank search and 404 pages; the course `provider` pointing at a Person instead of an Organization; courses locked inside one Custom HTML block; a nav made of loose paragraphs; a wrong minimum WordPress version for `theme.json` v3; missing editor styles; and hero image markup that would fail block validation.
 - **Meta description** was 164 characters at first. It is now 143.
 - **`mailto:` link** is plain HTML, not obfuscated, so crawlers can read it.
+- **Pretty URLs on the live host.** WP-CLI could not write `.htaccess` on IONOS, so unknown URLs, `robots.txt` and the sitemap returned the server's own 404. The deploy now writes the standard WordPress rewrite rules.
 
 ## Structure
 
