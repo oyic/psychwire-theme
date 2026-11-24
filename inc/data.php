@@ -22,7 +22,7 @@ function psychwire_profile(): array {
 		'title'     => 'Clinical Psychologist and Trainer',
 		'bio'       => 'Dr Alex Rivera is a clinical psychologist based in Sydney, Australia. For the past 12 years she has trained psychologists, counsellors and social workers in Acceptance and Commitment Therapy, a practical approach that helps people handle difficult thoughts and feelings and act on what matters to them.',
 		'email'     => 'hello@example.com',
-		'photo_alt' => 'Dr Alex Rivera, clinical psychologist',
+		'photo_alt' => 'Dr Alex Rivera smiling, wearing a white shirt',
 		'locality'  => 'Sydney',
 	);
 }

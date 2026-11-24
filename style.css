@@ -15,20 +15,6 @@ Text Domain: psychwire
 	outline-offset: 3px;
 }
 
-/* Skip link: hidden until focused */
-.skip-link {
-	position: absolute;
-	left: 0.5rem;
-	top: -4rem;
-	z-index: 100;
-	padding: 0.75rem 1rem;
-	background: var(--wp--preset--color--contrast);
-	color: var(--wp--preset--color--base);
-}
-.skip-link:focus {
-	top: 0.5rem;
-}
-
 @media (prefers-reduced-motion: no-preference) {
 	html {
 		scroll-behavior: smooth;

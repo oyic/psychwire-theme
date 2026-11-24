@@ -22,3 +22,4 @@ add_action( 'after_setup_theme', 'psychwire_setup' );
 
 require_once get_theme_file_path( 'inc/data.php' );
 require_once get_theme_file_path( 'inc/seo.php' );
+require_once get_theme_file_path( 'inc/cleanup.php' );
