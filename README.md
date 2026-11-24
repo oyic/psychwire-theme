@@ -88,8 +88,8 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 | Check | Result | How |
 |---|---|---|
 | Lighthouse, live HTTPS site | Performance 100, Accessibility 100, Best practices 100, SEO 100 | Lighthouse, mobile (median of 3 runs) |
-| First paint / Largest Contentful Paint / Speed Index | 0.83 s / 1.19 s / 2.06 s (was 0.99 s / 1.44 s / 2.50 s before the performance pass) | Lighthouse, mobile, median of 3 runs on the live site |
-| Layout shift / blocking time | 0 / about 40 ms | Lighthouse |
+| First paint / Largest Contentful Paint / Speed Index | 0.85 s / 1.21 s / 2.00 s (was 0.99 s / 1.44 s / 2.50 s before the performance pass) | Lighthouse, mobile, median of 3 runs on the live site |
+| Layout shift / blocking time | 0 / 0 ms | Lighthouse |
 | Width 375px | No horizontal scroll | Browser measurement: page width equals viewport, no element wider than it |
 | Heading order | H1, H2, H2, H3 x3, H2 | Parsed from the rendered HTML |
 | Keyboard order | skip link, brand, About, Courses, Contact, email | Focusable elements in DOM order |
