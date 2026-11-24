@@ -16,7 +16,7 @@ $profile = psychwire_profile();
 	<!-- /wp:heading -->
 
 	<!-- wp:paragraph -->
-	<p>Email: <a href="mailto:<?php echo esc_attr( antispambot( $profile['email'] ) ); ?>"><?php echo esc_html( $profile['email'] ); ?></a></p>
+	<p>Email: <a href="mailto:<?php echo esc_attr( $profile['email'] ); ?>"><?php echo esc_html( $profile['email'] ); ?></a></p>
 	<!-- /wp:paragraph -->
 </section>
 <!-- /wp:group -->
