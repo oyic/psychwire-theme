@@ -1,0 +1,36 @@
+/*
+Theme Name: Psychwire
+Theme URI: https://github.com/oyic/psychwire-theme
+Description: One-page block theme for Dr Alex Rivera, clinical psychologist and trainer. Server-rendered, no JavaScript, no plugins.
+Version: 1.0.0
+Requires at least: 6.5
+Requires PHP: 8.0
+License: GPL-2.0-or-later
+Text Domain: psychwire
+*/
+
+/* Accessibility: visible keyboard focus */
+:where(a, button, input, textarea, select):focus-visible {
+	outline: 3px solid var(--wp--preset--color--accent);
+	outline-offset: 3px;
+}
+
+/* Skip link: hidden until focused */
+.skip-link {
+	position: absolute;
+	left: 0.5rem;
+	top: -4rem;
+	z-index: 100;
+	padding: 0.75rem 1rem;
+	background: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--base);
+}
+.skip-link:focus {
+	top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
