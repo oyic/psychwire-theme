@@ -53,13 +53,14 @@ function psychwire_meta_description(): void {
 add_action( 'wp_head', 'psychwire_meta_description', 1 );
 
 /**
- * Build the schema.org graph: one Person and one Course per course.
+ * Build the schema.org graph: one Person, one Organization (the Course provider) and one Course per course.
  *
  * @return array<string,mixed>
  */
 function psychwire_build_graph(): array {
 	$profile   = psychwire_profile();
 	$person_id = home_url( '/#person' );
+	$org_id    = home_url( '/#organization' );
 
 	$graph = array(
 		array(
@@ -70,6 +71,7 @@ function psychwire_build_graph(): array {
 			'description' => $profile['bio'],
 			'email'       => $profile['email'],
 			'url'         => home_url( '/' ),
+			'image'       => $profile['photo'],
 			'address'     => array(
 				'@type'           => 'PostalAddress',
 				'addressLocality' => $profile['locality'],
@@ -78,18 +80,38 @@ function psychwire_build_graph(): array {
 		),
 	);
 
+	$graph[] = array(
+		'@type'   => 'Organization',
+		'@id'     => $org_id,
+		'name'    => $profile['name'],
+		'url'     => home_url( '/' ),
+		'founder' => array( '@id' => $person_id ),
+	);
+
 	foreach ( psychwire_courses() as $course ) {
+		$instance = array(
+			'@type'          => 'CourseInstance',
+			'courseMode'     => 'online',
+			'courseWorkload' => $course['workload'],
+			'instructor'     => array( '@id' => $person_id ),
+		);
+
+		if ( '' !== $course['repeat'] ) {
+			$instance['courseSchedule'] = array(
+				'@type'           => 'Schedule',
+				'repeatFrequency' => $course['repeat'],
+				'duration'        => $course['workload'],
+			);
+		}
+
 		$graph[] = array(
 			'@type'             => 'Course',
+			'@id'               => $course['url'],
 			'name'              => $course['name'],
 			'description'       => $course['description'],
 			'url'               => $course['url'],
-			'provider'          => array( '@id' => $person_id ),
-			'hasCourseInstance' => array(
-				'@type'          => 'CourseInstance',
-				'courseMode'     => 'online',
-				'courseWorkload' => $course['workload'],
-			),
+			'provider'          => array( '@id' => $org_id ),
+			'hasCourseInstance' => $instance,
 		);
 	}
 

@@ -15,16 +15,30 @@ $courses = psychwire_courses();
 	<h2 class="wp-block-heading">Courses</h2>
 	<!-- /wp:heading -->
 
-	<!-- wp:html -->
-	<div class="courses-grid">
+	<!-- wp:group {"layout":{"type":"grid","minimumColumnWidth":"16rem"}} -->
+	<div class="wp-block-group">
 <?php foreach ( $courses as $course ) : ?>
-		<article id="course-<?php echo esc_attr( $course['slug'] ); ?>" class="course-card">
-			<h3><?php echo esc_html( $course['name'] ); ?></h3>
+		<!-- wp:group {"tagName":"article","anchor":"course-<?php echo esc_attr( $course['slug'] ); ?>","className":"course-card","layout":{"type":"flow"}} -->
+		<article id="course-<?php echo esc_attr( $course['slug'] ); ?>" class="wp-block-group course-card">
+			<!-- wp:heading {"level":3} -->
+			<h3 class="wp-block-heading"><?php echo esc_html( $course['name'] ); ?></h3>
+			<!-- /wp:heading -->
+
+			<!-- wp:paragraph -->
 			<p><?php echo esc_html( $course['description'] ); ?></p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"className":"course-card__length"} -->
 			<p class="course-card__length"><?php echo esc_html( $course['length'] ); ?></p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph -->
+			<p><a href="#contact">Enquire about this course<span class="screen-reader-text">: <?php echo esc_html( $course['name'] ); ?></span></a></p>
+			<!-- /wp:paragraph -->
 		</article>
+		<!-- /wp:group -->
 <?php endforeach; ?>
 	</div>
-	<!-- /wp:html -->
+	<!-- /wp:group -->
 </section>
 <!-- /wp:group -->
