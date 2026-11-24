@@ -102,7 +102,7 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 | `robots.txt` and sitemap | Both served by WordPress | `curl` of the live site |
 | Demo link | Installs and activates from GitHub | Opened in a real browser |
 
-**Not done:** I have not pasted the JSON-LD into validator.schema.org or Google's Rich Results Test. Its structure is checked above, but the external validators are worth one manual run. The axe command-line tool would not run on my machine (a Chrome and ChromeDriver version mismatch), so accessibility is covered by Lighthouse, which uses the same axe-core rules, plus the manual keyboard and heading checks.
+**Not done:** I have not pasted the JSON-LD into validator.schema.org or Google's Rich Results Test. Its structure is checked above, but the external validators are worth one manual run: one-click links are in [Structured data (JSON-LD)](#structured-data-json-ld-test-it-yourself) below. The axe command-line tool would not run on my machine (a Chrome and ChromeDriver version mismatch), so accessibility is covered by Lighthouse, which uses the same axe-core rules, plus the manual keyboard and heading checks.
 
 ### Problems found and fixed along the way
 
@@ -114,6 +114,153 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 - **Editor error on every course card.** The card groups had an invalid layout type (`flow`), which the front end ignored but the block editor could not handle ("This block has encountered an error and cannot be previewed"). Removed; the Site Editor now loads the front page with no console errors and no error blocks.
 - **`mailto:` link** is plain HTML, not obfuscated, so crawlers can read it.
 - **Pretty URLs on the live host.** WP-CLI could not write `.htaccess` on IONOS, so unknown URLs, `robots.txt` and the sitemap returned the server's own 404. The deploy now writes the standard WordPress rewrite rules.
+
+## Structured data (JSON-LD): test it yourself
+
+The page prints one JSON-LD block in `<head>`, built in `inc/seo.php` from the same data as the visible page (`inc/data.php`). It is a connected `@graph`: a `Person` (Dr Rivera), an `Organization` (the course provider), a `WebSite`, a `WebPage` and three `Course` entries, each with an online `CourseInstance`, an ISO 8601 `courseWorkload` and an `instructor`. The monthly supervision course also has a `courseSchedule`.
+
+**Test it with a validator (one click, runs against the live site):**
+- [Schema.org validator](https://validator.schema.org/#url=https%3A%2F%2Fpsychwire.chrisalberto.me%2F)
+- [Google Rich Results Test](https://search.google.com/test/rich-results?url=https%3A%2F%2Fpsychwire.chrisalberto.me%2F)
+
+**Or pull it out of the live page yourself:**
+
+```bash
+curl -s https://psychwire.chrisalberto.me/ | sed -n 's/.*<script type="application\/ld+json">\(.*\)<\/script>.*/\1/p' | python3 -m json.tool
+```
+
+<details>
+<summary>The JSON-LD exactly as the live page serves it (snapshot, 2026-11-24)</summary>
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://psychwire.chrisalberto.me/#person",
+      "name": "Dr Alex Rivera",
+      "jobTitle": "Clinical Psychologist and Trainer",
+      "description": "Dr Alex Rivera is a clinical psychologist based in Sydney, Australia. For the past 12 years she has trained psychologists, counsellors and social workers in Acceptance and Commitment Therapy, a practical approach that helps people handle difficult thoughts and feelings and act on what matters to them.",
+      "email": "hello@example.com",
+      "url": "https://psychwire.chrisalberto.me/",
+      "image": "https://psychwire.chrisalberto.me/wp-content/themes/psychwire/assets/images/dr-rivera-800.jpg",
+      "knowsAbout": "Acceptance and Commitment Therapy",
+      "mainEntityOfPage": {
+        "@id": "https://psychwire.chrisalberto.me/#webpage"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sydney",
+        "addressCountry": "AU"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://psychwire.chrisalberto.me/#organization",
+      "name": "Dr Alex Rivera",
+      "url": "https://psychwire.chrisalberto.me/",
+      "founder": {
+        "@id": "https://psychwire.chrisalberto.me/#person"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://psychwire.chrisalberto.me/#website",
+      "url": "https://psychwire.chrisalberto.me/",
+      "name": "Dr Alex Rivera",
+      "inLanguage": "en-AU",
+      "publisher": {
+        "@id": "https://psychwire.chrisalberto.me/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://psychwire.chrisalberto.me/#webpage",
+      "url": "https://psychwire.chrisalberto.me/",
+      "name": "Dr Alex Rivera | Clinical Psychologist and Trainer in Sydney",
+      "description": "Dr Alex Rivera is a Sydney clinical psychologist who trains psychologists, counsellors and social workers in Acceptance and Commitment Therapy.",
+      "inLanguage": "en-AU",
+      "isPartOf": {
+        "@id": "https://psychwire.chrisalberto.me/#website"
+      },
+      "about": {
+        "@id": "https://psychwire.chrisalberto.me/#person"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://psychwire.chrisalberto.me/wp-content/themes/psychwire/assets/images/social.jpg",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "Course",
+      "@id": "https://psychwire.chrisalberto.me/#course-intro-act",
+      "name": "Introduction to Acceptance and Commitment Therapy",
+      "description": "The core ideas and skills, for practitioners new to the approach.",
+      "url": "https://psychwire.chrisalberto.me/#course-intro-act",
+      "inLanguage": "en-AU",
+      "provider": {
+        "@id": "https://psychwire.chrisalberto.me/#organization"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "courseWorkload": "PT6H",
+        "instructor": {
+          "@id": "https://psychwire.chrisalberto.me/#person"
+        }
+      }
+    },
+    {
+      "@type": "Course",
+      "@id": "https://psychwire.chrisalberto.me/#course-act-anxiety",
+      "name": "Acceptance and Commitment Therapy for Anxiety",
+      "description": "How to apply the approach with clients experiencing anxiety.",
+      "url": "https://psychwire.chrisalberto.me/#course-act-anxiety",
+      "inLanguage": "en-AU",
+      "provider": {
+        "@id": "https://psychwire.chrisalberto.me/#organization"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "courseWorkload": "PT4H",
+        "instructor": {
+          "@id": "https://psychwire.chrisalberto.me/#person"
+        }
+      }
+    },
+    {
+      "@type": "Course",
+      "@id": "https://psychwire.chrisalberto.me/#course-act-supervision",
+      "name": "Acceptance and Commitment Therapy Supervision",
+      "description": "Monthly group sessions to discuss cases and build confidence.",
+      "url": "https://psychwire.chrisalberto.me/#course-act-supervision",
+      "inLanguage": "en-AU",
+      "provider": {
+        "@id": "https://psychwire.chrisalberto.me/#organization"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "courseWorkload": "PT1H30M",
+        "instructor": {
+          "@id": "https://psychwire.chrisalberto.me/#person"
+        },
+        "courseSchedule": {
+          "@type": "Schedule",
+          "repeatFrequency": "P1M",
+          "duration": "PT1H30M"
+        }
+      }
+    }
+  ]
+}
+```
+
+</details>
 
 ## Structure
 
