@@ -87,6 +87,7 @@ The Lighthouse row below was run on the live site (https://psychwire.chrisalbert
 
 | Check | Result | How |
 |---|---|---|
+| [Google PageSpeed Insights report](https://pagespeed.web.dev/analysis/https-psychwire-chrisalberto-me/kujk4li4lj2ozt0hjcod1z?form_factor=mobile) (mobile, 2026-11-25) | Performance 100, Accessibility 100, Best practices 100, SEO 100. First paint 0.8 s, Largest Contentful Paint 1.2 s, blocking time 0 ms, layout shift 0, Speed Index 2.3 s (4.8 s in the first report, before the performance pass). Its one remaining note is longer cache lifetimes for static files, a server setting | Google's own PageSpeed Insights |
 | Lighthouse, live HTTPS site | Performance 100, Accessibility 100, Best practices 100, SEO 100 | Lighthouse, mobile (median of 3 runs) |
 | First paint / Largest Contentful Paint / Speed Index | 0.85 s / 1.21 s / 2.00 s (was 0.99 s / 1.44 s / 2.50 s before the performance pass) | Lighthouse, mobile, median of 3 runs on the live site |
 | Layout shift / blocking time | 0 / 0 ms | Lighthouse |
